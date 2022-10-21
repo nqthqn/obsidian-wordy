@@ -1,4 +1,11 @@
-# Obsidian Sample Plugin
+# Wordy
+
+Connect to the Datamuse API
+
+
+
+
+
 
 This is a sample plugin for Obsidian (https://obsidian.md).
 
