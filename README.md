@@ -4,6 +4,56 @@ Connect to the Datamuse API
 
 
 
+# `/words?constraint=word`
+
+## Examples
+
+rhymes with forgetful
+https://api.datamuse.com/words?rel_rhy=forgetful
+
+synonyms of happy
+https://api.datamuse.com/words?rel_syn=happy
+
+antonyms of bad
+https://api.datamuse.com/words?rel_ant=bad
+
+
+| constraint | description                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ml`       | Means like constraint: reverse dictionary.  require that the results have a meaning related to this string value, which can be any word or sequence of words.                                                                                                                                                                                                                                                                                                                                             |
+| `sl`       | Sounds like constraint: require that the results are pronounced similarly to this string of characters. (If the string of characters doesn't have a known pronunciation, the system will make its best guess using a text-to-phonemes algorithm.)                                                                                                                                                                                                                                    |
+| `sp`       | Spelled like constraint: require that the results are spelled similarly to this string of characters, or that they match this wildcard pattern. A pattern can include any combination of alphanumeric characters and the symbols described on that page. The most commonly used symbols are * (a placeholder for any number of characters) and ? (a placeholder for exactly one character). Please be sure that your parameters are properly URL encoded when you form your request. |
+| `rel_CODE` | Related word constraints: require that the results, when paired with the word in this parameter, are in a predefined lexical relation indicated by **CODE**. Any number of these parameters may be specified any number of times. An assortment of semantic, phonetic, and corpus-statistics-based relations are available. At this time, these relations are available for English-language vocabularies only. ==CODE== is a three-letter identifier from the list below.           |
+|            |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+
+
+what if you had a poetry writing interface where you could type and on the side bar it would automatically show you results from different datamuse queries?
+
+what if we queried synonyms at a depth of 2? and showed results as queries completed?
+
+## words with similiar meanings
+`rel_syn` Synonyms (words contained within the same WordNet synset) ocean → sea
+`rel_spc` "Kind of" (direct hypernyms, per WordNet) gondola → boat
+`rel_gen` "More general than" (direct hyponyms, per WordNet) boat → gondola
+`rel_com` "Comprises" (direct holonyms, per WordNet) car → accelerator
+`rel_par` "Part of" (direct meronyms, per WordNet) trunk → tree
+
+## maybe fun for poetry
+`rel_trg` "Triggers" (words that are statistically associated with the query word in the same piece of text.) cow → milking
+`rel_bga` Frequent followers (w′ such that P(w′|w) ≥ 0.001, per Google Books Ngrams) wreak → havoc
+`rel_bgb` Frequent predecessors (w′ such that P(w|w′) ≥ 0.001, per Google Books Ngrams) havoc → wreak
+`rel_jja` Popular nouns modified by the given adjective, per Google Books Ngrams gradual → increase
+`rel_jjb` Popular adjectives used to modify the given noun, per Google Books Ngrams beach → sandy
+`rel_ant` Antonyms (per WordNet) late → early
+
+## rhyming shit
+`rel_rhy` Rhymes ("perfect" rhymes, per RhymeZone) spade → aid
+`rel_nry` Approximate rhymes (per RhymeZone) forest → chorus
+`rel_hom` Homophones (sound-alike words) course → coarse
+`rel_cns` Consonant match sample → simple
+
+
+
 
 
 
