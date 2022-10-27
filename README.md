@@ -1,5 +1,6 @@
 # Wordy
 
-This plugin is in alpha. It connects to the [Datamuse API](https://www.datamuse.com/api/).
+## v.0.0.1
+- Adds `Wordy: Synonyms` command to the palette. Select a word and run the command to pull up synonyms. This list includes hypernyms, hyponyms, holonyms and meronyms.
 
-![](demo.gif)
+Uses the [Datamuse API](https://www.datamuse.com/api/).
