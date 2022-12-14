@@ -1,13 +1,22 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginManifest, PluginSettingTab, Setting, SuggestModal } from 'obsidian';
-import { DatamuseApi } from './DatamuseApi';
+import {
+	App,
+	Editor,
+	MarkdownView,
+	Notice,
+	Plugin,
+	PluginManifest,
+	PluginSettingTab,
+	SuggestModal,
+} from "obsidian";
+import { DatamuseApi } from "./DatamuseApi";
 
 interface WordyPluginSettings {
 	enumeratedWords: boolean;
 }
 
 const DEFAULT_SETTINGS: WordyPluginSettings = {
-	enumeratedWords: true
-}
+	enumeratedWords: true,
+};
 
 export default class WordyPlugin extends Plugin {
 	settings: WordyPluginSettings;
@@ -22,46 +31,49 @@ export default class WordyPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-
 		// This adds an editor command that can perform some operation on the current editor instance
 		this.addCommand({
-			id: 'wordy-syn',
-			name: 'Synonyms',
+			id: "wordy-syn",
+			name: "Synonyms",
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				const rootWord = editor.getSelection();
 				if (rootWord != "") {
-					const similarWords = await this.datamuseApi.wordsSimilarTo(rootWord);
+					const similarWords = await this.datamuseApi.wordsSimilarTo(
+						rootWord
+					);
 					if (similarWords.relatedWords.length == 0) {
 						new Notice(`Oops — No synonyms found.`);
 						return;
 					}
-					new SearchableWordsModal(this.app,
+					new SearchableWordsModal(
+						this.app,
 						similarWords.relatedWords,
 						(selectedWord: string) => {
-							editor.replaceSelection(selectedWord)
-						}).open();
+							editor.replaceSelection(selectedWord);
+						}
+					).open();
 				} else {
 					new Notice(`Oops — Select a word first.`);
 				}
-			}
+			},
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new WordyPluginSettingTab(this.app, this));
 	}
 
-
 	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		this.settings = Object.assign(
+			{},
+			DEFAULT_SETTINGS,
+			await this.loadData()
+		);
 	}
 
 	async saveSettings() {
 		await this.saveData(this.settings);
 	}
 }
-
-
-
 
 // Suggestion modal
 type Word = string;
@@ -92,11 +104,9 @@ export class SearchableWordsModal extends SuggestModal<Word> {
 
 	// Perform action on the selected suggestion.
 	onChooseSuggestion(word: Word, evt: MouseEvent | KeyboardEvent) {
-		this.replaceFn(word)
+		this.replaceFn(word);
 	}
 }
-
-
 
 /**
  * Setting Pane
@@ -113,7 +123,7 @@ class WordyPluginSettingTab extends PluginSettingTab {
 	display(): void {
 		const { containerEl } = this;
 		containerEl.empty();
-		containerEl.createEl('h2', { text: 'Settings' });
-		containerEl.createEl('p').setText('Nothing to configure yet!');
+		containerEl.createEl("h2", { text: "Settings" });
+		containerEl.createEl("p").setText("Nothing to configure yet!");
 	}
 }
