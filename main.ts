@@ -19,7 +19,9 @@ const DEFAULT_SETTINGS: WordyPluginSettings = {
 };
 
 export default class WordyPlugin extends Plugin {
-	settings: WordyPluginSettings;
+	settings: WordyPluginSettings = {
+		enumeratedWords: true,
+	};
 	datamuseApi: DatamuseApi;
 
 	constructor(app: App, manifest: PluginManifest) {
@@ -48,6 +50,32 @@ export default class WordyPlugin extends Plugin {
 					new SearchableWordsModal(
 						this.app,
 						similarWords.relatedWords,
+						(selectedWord: string) => {
+							editor.replaceSelection(selectedWord);
+						}
+					).open();
+				} else {
+					new Notice(`Oops — Select a word first.`);
+				}
+			},
+		});
+
+		this.addCommand({
+			id: "wordy-ant",
+			name: "Antonyms",
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				const rootWord = editor.getSelection();
+				if (rootWord != "") {
+					const oppositeWords = await this.datamuseApi.wordsOppositeTo(
+						rootWord
+					);
+					if (oppositeWords.length == 0) {
+						new Notice(`Oops — No antonyms found.`);
+						return;
+					}
+					new SearchableWordsModal(
+						this.app,
+						oppositeWords,
 						(selectedWord: string) => {
 							editor.replaceSelection(selectedWord);
 						}
