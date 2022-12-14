@@ -43,13 +43,13 @@ export default class WordyPlugin extends Plugin {
 					const similarWords = await this.datamuseApi.wordsSimilarTo(
 						rootWord
 					);
-					if (similarWords.relatedWords.length == 0) {
+					if (similarWords.length == 0) {
 						new Notice(`Oops — No synonyms found.`);
 						return;
 					}
 					new SearchableWordsModal(
 						this.app,
-						similarWords.relatedWords,
+						similarWords,
 						(selectedWord: string) => {
 							editor.replaceSelection(selectedWord);
 						}
@@ -66,9 +66,8 @@ export default class WordyPlugin extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				const rootWord = editor.getSelection();
 				if (rootWord != "") {
-					const oppositeWords = await this.datamuseApi.wordsOppositeTo(
-						rootWord
-					);
+					const oppositeWords =
+						await this.datamuseApi.wordsOppositeTo(rootWord, true);
 					if (oppositeWords.length == 0) {
 						new Notice(`Oops — No antonyms found.`);
 						return;
@@ -78,6 +77,60 @@ export default class WordyPlugin extends Plugin {
 						oppositeWords,
 						(selectedWord: string) => {
 							editor.replaceSelection(selectedWord);
+						}
+					).open();
+				} else {
+					new Notice(`Oops — Select a word first.`);
+				}
+			},
+		});
+
+		this.addCommand({
+			id: "wordy-rhy",
+			name: "Rhymes",
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				const rootWord = editor.getSelection();
+				if (rootWord != "") {
+					const rhymes = await this.datamuseApi.wordsThatRhymeWith(
+						rootWord
+					);
+					if (rhymes.length == 0) {
+						new Notice(`Oops — No rhymes found.`);
+						return;
+					}
+					new SearchableWordsModal(
+						this.app,
+						rhymes,
+						(selectedWord: string) => {
+							editor.replaceSelection(selectedWord);
+						}
+					).open();
+				} else {
+					new Notice(`Oops — Select a word first.`);
+				}
+			},
+		});
+
+		this.addCommand({
+			id: "wordy-asyn",
+			name: "Alliterative Synonyms",
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				const [priorWord, rootWord] = editor.getSelection().split(" ");
+				if (rootWord != "") {
+					const alliterativeSynonyms =
+						await this.datamuseApi.alliterativeSynonyms(
+							priorWord,
+							rootWord
+						);
+					if (alliterativeSynonyms.length == 0) {
+						new Notice(`Oops — No rhymes found.`);
+						return;
+					}
+					new SearchableWordsModal(
+						this.app,
+						alliterativeSynonyms,
+						(selectedWord: string) => {
+							editor.replaceSelection(`${selectedWord}`);
 						}
 					).open();
 				} else {
