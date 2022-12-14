@@ -1,5 +1,5 @@
 # Wordy
-Find synonyms and more using the [Datamuse API](https://www.datamuse.com/api/).
+Find synonyms and more using the [Datamuse API](https://www.datamuse.com/api/). This is an [Obsidian](https://obsidian.md/) plugin.
 
 # Demo
 
