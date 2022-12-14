@@ -20,4 +20,16 @@ export class DatamuseApi {
         return similarWords;
     }
 
+	async wordsOppositeTo(rootWord: string): Promise<string[]> {
+        const results: string[] = [];
+		const urls = ["rel_ant"];
+        await Promise.all(urls.map(async (queryParam: string) => {
+            const url = `${this.baseUrl}?${queryParam}=${rootWord}`;
+            const resp = await fetch(url);
+            const data = await resp.json();
+            results.push(...data.map((o: any) => o.word))
+        }));
+        return results;
+    }
+
 }
