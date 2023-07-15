@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-wordy",
 	"name": "Wordy",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"minAppVersion": "0.15.0",
 	"description": "Thesaurus, dictionary and more using the Datamuse API",
 	"author": "Nate",
