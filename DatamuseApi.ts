@@ -1,3 +1,5 @@
+import { Notice } from "obsidian";
+
 export type SimilarWords = {
 	relatedWords: string[];
 };
@@ -118,9 +120,14 @@ export class DatamuseApi {
 	): Promise<string[]> {
 		const results = [];
 		const url = `${this.baseUrl}?${queryParam}=${rootWord}`;
-		const resp = await fetch(url);
-		const data = await resp.json();
-		results.push(...data.map((o: any) => o.word));
-		return results;
+		try {
+			const response = await fetch(url);
+			const data = await response.json();
+			results.push(...data.map((o: any) => o.word));
+			return results;
+		} catch (error) {
+			new Notice(`DatamuseAPI — ${error}.`);
+			return [];
+		}
 	}
 }
