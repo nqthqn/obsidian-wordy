@@ -1,10 +1,12 @@
 {
+	"extends": "@tsconfig/svelte/tsconfig.json",
 	"compilerOptions": {
+		"types": ["svelte", "node"],
 		"allowJs": true,
+		"strictPropertyInitialization": false,
 		"baseUrl": ".",
 		"forceConsistentCasingInFileNames": true,
 		"importHelpers": true,
-		"inlineSourceMap": true,
 		"inlineSources": true,
 		"isolatedModules": true,
 		"module": "ESNext",
@@ -21,6 +23,7 @@
 		]
 	},
 	"include": [
-		"**/*.ts"
+		"**/*.ts",
+		"**/*.js"
 	]
 }
