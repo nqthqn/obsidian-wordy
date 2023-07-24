@@ -16,7 +16,8 @@ type QueryParam =
 	| "rel_spc" // "More general than" (direct hyponyms)	boat → gondola
 	| "rel_gen" // "More general than" (direct hyponyms)	boat → gondola
 	| "rel_com" // "Comprises" (direct holonyms)			car → accelerator
-	| "rel_par"; //"Part of" (direct meronyms)				trunk → tree
+	| "rel_par" // "Part of" (direct meronyms)				trunk → tree
+  | "ml";			// "Meaning like"
 
 export class DatamuseApi {
 	baseUrl = new URL("https://api.datamuse.com/words");
@@ -24,6 +25,7 @@ export class DatamuseApi {
 	async wordsSimilarTo(rootWord: string, extra = false): Promise<string[]> {
 		const results: string[] = [];
 		const urls: QueryParam[] = [
+			"ml",
 			"rel_syn",
 			"rel_spc",
 			"rel_gen",
