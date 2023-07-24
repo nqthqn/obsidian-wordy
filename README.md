@@ -15,6 +15,9 @@ Select a word, run the `Wordy: Synonyms` command, find a replacement. Current co
 **Tip: Set a hotkey for this command.**
 
 # Changelog
+## 1.2.0
+- Adds `ml` to find more synonyms
+
 ## 1.1.0
 - Adds `Wordy: Alliterative Synonyms` command. `good food` to `good grub`
 - Adds `Wordy: Rhymes` command.
@@ -25,9 +28,12 @@ Select a word, run the `Wordy: Synonyms` command, find a replacement. Current co
 - Adds `Wordy: Synonyms` command to the palette. Select a word and run the command to pull up synonyms. This list includes hypernyms, hyponyms, holonyms and meronyms.
 
 # Roadmap
+
+Open a Feature Request and I'll put it on the roadmap :)
+
 I like to write poetry. One day composing a text message poem I asked myself "What word starts with 'P' and is a synonym for 'Beauitful'?" Our goal is to map the [Datamuse API](https://www.datamuse.com/api/) in an aggregate way. For example, when searching for synonyms — hypernyms and homonyms are also included.
 - [ ] Write e2e tests
-- [ ] Means like
+- [x] Means like
 - [ ] Sounds like
 - [ ] Spelled like
 - [ ] jja	Popular nouns modified by the given adjective, per Google Books Ngrams	gradual → increase
