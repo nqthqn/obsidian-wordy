@@ -3,6 +3,7 @@
 	"compilerOptions": {
 		"types": ["svelte", "node"],
 		"allowJs": true,
+		"strictPropertyInitialization": false,
 		"baseUrl": ".",
 		"forceConsistentCasingInFileNames": true,
 		"importHelpers": true,
@@ -22,6 +23,7 @@
 		]
 	},
 	"include": [
-		"**/*.ts"
+		"**/*.ts",
+		"**/*.js"
 	]
 }

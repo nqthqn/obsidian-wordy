@@ -35,7 +35,7 @@ export default class WordyPlugin extends Plugin {
 
 		this.registerView(
 			VIEW_ID,
-			(leaf) => new ExampleView(leaf)
+			(leaf) => new WordyView(leaf)
 		);
 		this.addRibbonIcon("pilcrow", "Wordy view", () => {
 			this.activateView();
@@ -183,7 +183,7 @@ import Component from "./Component.svelte";
 
 export const VIEW_ID = "wordy-view";
 
-export class ExampleView extends ItemView {
+export class WordyView extends ItemView {
 	component: Component;
 	
 	constructor(leaf: WorkspaceLeaf) {
@@ -199,11 +199,12 @@ export class ExampleView extends ItemView {
 	}
 
 	async onOpen() {
-		// const container = this.containerEl.children[1];
+	// const container = this.containerEl.children[1];
 		// container.empty();
 		// container.createEl("h4", { text: "Wordy" });
+		// debugger;
 		this.component = new Component({
-			target: this.containerEl,
+			target: this.containerEl.children[1],
 			props: {
 				variable: 42
 			}
