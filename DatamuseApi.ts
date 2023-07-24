@@ -21,6 +21,14 @@ type QueryParam =
 export class DatamuseApi {
 	baseUrl = new URL("https://api.datamuse.com/words");
 
+	async wordsSpelledLike(rootWord: string): Promise<string[]> {
+		const url = new URL(this.baseUrl.toString());
+		url.searchParams.append("sp", rootWord);
+		const response = await fetch(url.toString());
+		const data = await response.json();
+		return data.map((word: any) => word.word);
+	}
+
 	async wordsSimilarTo(rootWord: string, extra = false): Promise<string[]> {
 		const results: string[] = [];
 		const urls: QueryParam[] = [

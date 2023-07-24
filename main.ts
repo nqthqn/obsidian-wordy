@@ -33,6 +33,14 @@ export default class WordyPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
+		this.registerView(
+			VIEW_ID,
+			(leaf) => new ExampleView(leaf)
+		);
+		this.addRibbonIcon("pilcrow", "Wordy view", () => {
+			this.activateView();
+		});
+
 		// This adds an editor command that can perform some operation on the current editor instance
 		this.addCommand({
 			id: "wordy-syn",
@@ -141,6 +149,19 @@ export default class WordyPlugin extends Plugin {
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new WordyPluginSettingTab(this.app, this));
+
+	}
+	async activateView() {
+		this.app.workspace.detachLeavesOfType(VIEW_ID);
+
+		await this.app.workspace.getRightLeaf(false).setViewState({
+			type: VIEW_ID,
+			active: true,
+		});
+
+		this.app.workspace.revealLeaf(
+			this.app.workspace.getLeavesOfType(VIEW_ID)[0]
+		);
 	}
 
 	async loadSettings() {
@@ -153,6 +174,45 @@ export default class WordyPlugin extends Plugin {
 
 	async saveSettings() {
 		await this.saveData(this.settings);
+	}
+}
+
+// Wordy View
+import { ItemView, WorkspaceLeaf } from "obsidian";
+import Component from "./Component.svelte";
+
+export const VIEW_ID = "wordy-view";
+
+export class ExampleView extends ItemView {
+	component: Component;
+	
+	constructor(leaf: WorkspaceLeaf) {
+		super(leaf);
+	}
+
+	getViewType() {
+		return VIEW_ID;
+	}
+
+	getDisplayText() {
+		return "Wordy";
+	}
+
+	async onOpen() {
+		// const container = this.containerEl.children[1];
+		// container.empty();
+		// container.createEl("h4", { text: "Wordy" });
+		this.component = new Component({
+			target: this.containerEl,
+			props: {
+				variable: 42
+			}
+		})
+	}
+
+	async onClose() {
+		// Kill the svelte app
+		this.component.$destroy();
 	}
 }
 
