@@ -4,10 +4,12 @@ import {
 	MarkdownView,
 	Notice,
 	Plugin,
-	PluginManifest,
 	PluginSettingTab,
 	SuggestModal,
 } from "obsidian";
+
+import type { MarkdownFileInfo, PluginManifest }from "obsidian";
+
 import { DatamuseApi } from "./DatamuseApi";
 
 interface WordyPluginSettings {
@@ -45,7 +47,7 @@ export default class WordyPlugin extends Plugin {
 		this.addCommand({
 			id: "wordy-syn",
 			name: "Synonyms",
-			editorCallback: async (editor: Editor, view: MarkdownView) => {
+			editorCallback: async (editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
 				const rootWord = editor.getSelection();
 				if (rootWord != "") {
 					const similarWords = await this.datamuseApi.wordsSimilarTo(
@@ -71,7 +73,7 @@ export default class WordyPlugin extends Plugin {
 		this.addCommand({
 			id: "wordy-ant",
 			name: "Antonyms",
-			editorCallback: async (editor: Editor, view: MarkdownView) => {
+			editorCallback: async (editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
 				const rootWord = editor.getSelection();
 				if (rootWord != "") {
 					const oppositeWords =
@@ -96,7 +98,7 @@ export default class WordyPlugin extends Plugin {
 		this.addCommand({
 			id: "wordy-rhy",
 			name: "Rhymes",
-			editorCallback: async (editor: Editor, view: MarkdownView) => {
+			editorCallback: async (editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
 				const rootWord = editor.getSelection();
 				if (rootWord != "") {
 					const rhymes = await this.datamuseApi.wordsThatRhymeWith(
@@ -122,7 +124,7 @@ export default class WordyPlugin extends Plugin {
 		this.addCommand({
 			id: "wordy-asyn",
 			name: "Alliterative Synonyms",
-			editorCallback: async (editor: Editor, view: MarkdownView) => {
+			editorCallback: async (editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
 				const [priorWord, rootWord] = editor.getSelection().split(" ");
 				if (rootWord != "") {
 					const alliterativeSynonyms =
