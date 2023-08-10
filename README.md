@@ -15,6 +15,10 @@ Select a word, run the `Wordy: Synonyms` command, find a replacement. Current co
 **Tip: Set a hotkey for this command.**
 
 # Changelog
+## 1.3.0, 1.3.1
+- Adds new MVP Wordy panel for searching synonyms
+- Locks versions for better remote/local error parity
+
 ## 1.2.0
 - Adds `ml` to find more synonyms
 
